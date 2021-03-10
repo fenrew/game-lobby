@@ -1,4 +1,4 @@
-const Room = requre("./Room.js");
+const Room = require("./Room.js");
 
 class Lobby {
   constructor(io) {
@@ -50,3 +50,5 @@ class Lobby {
     );
   }
 }
+
+module.exports = Lobby;

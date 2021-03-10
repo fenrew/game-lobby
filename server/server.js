@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const app = require("express")();
 const http = require("http").createServer(app);
 
@@ -7,6 +8,7 @@ const routes = require("./routes/index.js");
 app.use(process.env.PREFIX || "/", routes);
 
 const io = require("./socketio/index.js")(http);
+const lobby = require("./lobby/index.js")(io);
 
 // Server listens on port
 http.listen(process.env.PORT || 3000, () => {
