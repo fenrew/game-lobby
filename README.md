@@ -22,6 +22,7 @@ The major components of the server are:
 - DeleteRoom: Delete a Room
 - FindRoom: Find a Room
 - FindUsersRoom: Find a Room that belongs to a User (takes a userId, string or number)
+- ChangeRoomName: Changes the name of the room. It must be a unique name
 
 #### Room:
 
@@ -30,6 +31,7 @@ The major components of the server are:
 - PromoteUser: Promote new lobby creator (for transfering permissions)
 - AttachInstance: Attach (game?) instance to lobby
 - DetachInstance: Detaches the (game?) instance from the lobby
+- ChangeName: Changes the name of the room.
 
 ### Room States:
 

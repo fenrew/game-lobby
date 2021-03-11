@@ -1,6 +1,7 @@
 class Room {
-  constructor(id) {
+  constructor(id, name) {
     this.id = id;
+    this.name = name;
     this.users = [];
     this.gameInstance = null;
     this.closed = false;
@@ -46,6 +47,12 @@ class Room {
     // Detaches a game instance from the room
     this.detachInstance = () => {
       this.gameInstance = null;
+    };
+
+    this.changeName = (newName) => {
+      this.name = newName.toString();
+      if (this.name.length < 1) return false;
+      return this.name;
     };
   }
 }

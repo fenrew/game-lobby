@@ -19,11 +19,21 @@ class Lobby {
       if (typeof roomId !== "string") return false;
       return true;
     };
+
+    this.validRoomName = (roomName) => {
+      if (!(typeof roomName === "string" || typeof roomName === "number"))
+        return false;
+
+      const roomNameStr = roomName.toString();
+      if (roomNameStr.length < 1) return false;
+
+      return true;
+    };
   }
 
-  _createRoom() {
+  _createRoom(name) {
     const roomId = this.createId();
-    const createdRoom = new Room(roomId);
+    const createdRoom = new Room(roomId, name);
 
     createdRoom.initialize();
 
@@ -48,6 +58,17 @@ class Lobby {
     return this.rooms.find((room) =>
       room.users.find((user) => user === userId)
     );
+  }
+
+  _changeRoomName(userId, newName) {
+    if (!this.validRoomName(newName)) return false;
+
+    const isNameTaken = this.rooms.some((room) => room.name === newName);
+    if (isNameTaken) return false;
+
+    const room = this._findUsersRoom(userId);
+
+    return room.changeName(newName);
   }
 }
 
