@@ -1,10 +1,10 @@
 const Room = require("./Room.js");
 
 class Lobby {
-  constructor(io) {
-    this.io = io;
+  constructor() {
     this.rooms = [];
     this.totalNumberOfCreatedRooms = 0;
+    this.maxRoomNameLength = 15;
 
     this.createId = () => {
       this.totalNumberOfCreatedRooms += 1;
@@ -23,23 +23,32 @@ class Lobby {
     this.validRoomName = (roomName) => {
       if (!(typeof roomName === "string" || typeof roomName === "number"))
         return false;
-
       const roomNameStr = roomName.toString();
-      if (roomNameStr.length < 1) return false;
+      if (roomNameStr.length < 1 || roomNameStr.length > this.maxRoomNameLength)
+        return false;
+      return true;
+    };
 
+    this.validOptions = (options) => {
+      if (!this.validRoomName(options.roomName)) return false;
+      if (options.gameUrl && !(typeof options.gameUrl === "string"))
+        return false;
+      if (options.maxPlayers && options.maxPlayers > 100) return false;
       return true;
     };
   }
 
-  _createRoom(name) {
+  _createRoom(options) {
+    if (!this.validOptions(options)) return false;
+
     const roomId = this.createId();
-    const createdRoom = new Room(roomId, name);
+    const createdRoom = new Room(roomId, options);
 
     createdRoom.initialize();
 
     this.rooms.push(createdRoom);
 
-    return id;
+    return createdRoom;
   }
 
   _removeRoom(roomId) {
@@ -70,6 +79,10 @@ class Lobby {
 
     return room.changeName(newName);
   }
+
+  _getAllRooms() {
+    return this.rooms;
+  }
 }
 
-module.exports = Lobby;
+module.exports = new Lobby();

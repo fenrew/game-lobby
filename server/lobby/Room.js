@@ -1,7 +1,10 @@
 class Room {
-  constructor(id, name) {
+  constructor(id, options) {
     this.id = id;
-    this.name = name;
+    this.roomName = options.roomName;
+    this.gameUrl = options.gameUrl;
+    this.maxPlayers = options.maxPlayers || 8;
+    this.age = new Date();
     this.users = [];
     this.gameInstance = null;
     this.closed = false;
@@ -50,9 +53,9 @@ class Room {
     };
 
     this.changeName = (newName) => {
-      this.name = newName.toString();
-      if (this.name.length < 1) return false;
-      return this.name;
+      this.roomName = newName.toString();
+      if (this.roomName.length < 1) return false;
+      return this.roomName;
     };
   }
 }

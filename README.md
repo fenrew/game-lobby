@@ -4,6 +4,20 @@
 
 This is a template for a server using NodeJS and socketIO that can be used to create lobbies. The initial thought is for it to be much like a gaming lobby where users can join a lobby, start a game together, and clean up after the game once it is finished.
 
+## Run locally
+
+How to run the lobby locally as a developer
+
+### Client
+
+cd app
+npm run dev
+
+### Server
+
+cd server
+npm run dev
+
 ## Components
 
 The major components of the server are:

@@ -1,0 +1,39 @@
+.each-room-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.each-room-container:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.each-room-container > p {
+  text-align: center;
+}
+
+.each-room-name {
+  width: 50%;
+}
+
+.each-room-players {
+  width: 20%;
+}
+
+.each-room-age {
+  width: 20%;
+}
+
+.each-room-join-container {
+  width: 10%;
+}
+
+.each-room-join {
+  width: fit-content;
+  padding: 0 5px;
+}
+
+.each-room-join:hover {
+  background-color: darkgreen;
+}

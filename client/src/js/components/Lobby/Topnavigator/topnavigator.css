@@ -1,0 +1,48 @@
+#topnavigator-main-container {
+  background-color: black;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 2px rgb(255, 53, 53) solid;
+  height: 6%;
+}
+
+#sortby-bar-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#sortby-bar-container > div {
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sortby-bar-container > div:hover {
+  cursor: pointer;
+  background-color: rgb(34, 34, 34);
+}
+
+#sortby-bar-name {
+  width: 50%;
+}
+
+#sortby-bar-players {
+  width: 20%;
+}
+
+#sortby-bar-age {
+  width: 20%;
+}
+
+#sortby-bar-open {
+  width: 10%;
+}
+
+.topnavigator-sort-by-icon {
+  height: 1.5vh;
+  width: 1.5vh;
+  margin-right: 2px;
+}

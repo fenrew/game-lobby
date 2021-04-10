@@ -1,0 +1,9 @@
+#display-room-main-container {
+  color: white;
+  background-color: rgb(26, 26, 26);
+  height: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 2px solid black;
+}

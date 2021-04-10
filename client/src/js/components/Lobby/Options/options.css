@@ -1,0 +1,71 @@
+#options-main-container {
+  background-color: rgb(26, 6, 46);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 2px solid black;
+  color: white;
+  width: 250px;
+  height: 100%;
+}
+
+#options-display-name-container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+#options-display-name-input-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#options-display-name-input {
+  width: 60%;
+}
+
+#options-display-name-confirm-btn:hover {
+  color: rgb(214, 214, 214);
+  cursor: pointer;
+}
+
+#options-filter-container {
+  width: min-content;
+  margin: 15% auto 0 auto;
+}
+
+#options-filter-header-container {
+  display: flex;
+}
+
+#options-filter-header {
+  text-decoration: underline;
+  margin: 5% 0;
+}
+
+#options-clear-filter-btn {
+  margin: auto 0 auto auto;
+  font-size: 13px;
+}
+
+#options-clear-filter-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#options-filter-checkboxes-container {
+  margin: 5% 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#options-filter-checkboxes-container > div {
+  width: fit-content;
+}
+
+#options-filter-checkboxes-container > div > input {
+  margin-right: 5px;
+}
+
+.options-input-containers {
+  margin: 3px;
+}

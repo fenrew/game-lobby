@@ -1,0 +1,31 @@
+#lobbies-main-container {
+  background-color: rgb(0, 0, 0);
+  height: 100vh;
+}
+
+#lobby-content-container {
+  display: flex;
+  height: 70%;
+  background-color: rgb(26, 26, 26);
+}
+
+#lobby-chat-container {
+  height: 30%;
+}
+
+#lobbies-containers {
+  width: 100%;
+}
+
+.lobby-default-btn {
+  background-color: black;
+  width: fit-content;
+  padding: 2px 8px;
+  margin: 15px auto;
+}
+
+.lobby-default-btn:hover {
+  background-color: rgb(15, 15, 15);
+  color: rgb(220, 184, 255);
+  cursor: pointer;
+}
