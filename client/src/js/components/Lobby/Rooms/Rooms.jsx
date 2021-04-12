@@ -34,7 +34,15 @@ const Rooms = (props) => {
 
         props.socket.on("updatedRooms", (newRoom) => {
             const {age, roomName, maxPlayers, id, players} = newRoom
-            rooms.list.push({age, roomName, maxPlayers, id, players})
+            const existingRoom =  rooms.list.find(room => room.id === newRoom.id)
+
+            if(!existingRoom){
+                rooms.list.push({age, roomName, maxPlayers, id, players})
+            } else {
+                existingRoom.roomName = roomName
+                existingRoom.maxPlayers = maxPlayers
+                existingRoom.players = players
+            }
             setRooms({...rooms})
         })
 
@@ -46,13 +54,13 @@ const Rooms = (props) => {
     let filteredRooms = []
 
     const filterRoomsBy = () => {
-        const {filterBy: { open, lobbyName, playerName, minPlayers, maxPlayers }} = props
+        const {filterBy: { open, roomName, playerName, minPlayers, maxPlayers }} = props
         
         filteredRooms = rooms.list.filter(room => {
             if(open && room.closed) return false
-            if(!room.roomName.toLowerCase().includes(lobbyName.toLowerCase())) return false
-            if(room.players < minPlayers) return false
-            if(maxPlayers > 0 && maxPlayers < room.players) return false
+            if(!room.roomName.toLowerCase().includes(roomName.toLowerCase())) return false
+            if(room.players.length < minPlayers) return false
+            if(maxPlayers > 0 && maxPlayers < room.players.length) return false
             return true
         })
     }
@@ -78,7 +86,7 @@ const Rooms = (props) => {
 
     filterRoomsBy()
     sortRoomsBy()
-    const displayRooms = filteredRooms.map((room, index) => ( <EachRoom room={room} key={room.id} index={index} handleDisplay={props.handleDisplay} /> ))
+    const displayRooms = filteredRooms.map((room, index) => ( <EachRoom room={room} key={room.id} index={index} handleDisplay={props.handleDisplay} socket={props.socket} displayName={props.displayName} /> ))
 
     return (
         <div id="rooms-main-container">

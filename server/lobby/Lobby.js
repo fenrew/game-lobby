@@ -38,13 +38,13 @@ class Lobby {
     };
   }
 
-  _createRoom(options) {
+  _createRoom(options, userObj) {
     if (!this.validOptions(options)) return false;
-
+    if (this._findRoomByName(options.roomName)) return false;
     const roomId = this.createId();
     const createdRoom = new Room(roomId, options);
 
-    createdRoom.initialize();
+    createdRoom._initialize(userObj);
 
     this.rooms.push(createdRoom);
 
@@ -59,8 +59,12 @@ class Lobby {
     return roomid;
   }
 
-  _findRoom(roomId) {
+  _findRoomById(roomId) {
     return this.rooms.find((room) => room.id === roomId);
+  }
+
+  _findRoomByName(roomName) {
+    return this.rooms.find((room) => room.roomName === roomName);
   }
 
   _findUsersRoom(userId) {

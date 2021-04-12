@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import "./each-room.css"
 
 const EachRoom = (props) => {
+    const {id, roomName, players, maxPlayers, age, closed} = props.room
+
     const [action, setAction] = useState({
         hover: false
     })
-    const {id, roomName, players, maxPlayers, age, closed} = props.room
+
+    useEffect(() => {
+        props.socket.on("joinedRoomSuccess", () => {
+            props.handleDisplay("displayRoom", props.room)
+        })
+    }, [])
+
+    const handleJoinRoom = () => {
+        props.socket.emit("joinRoom", {roomId: id, userDisplayName: props.displayName})
+    }
 
     const ageInMinutes = ((new Date().getTime() - new Date(age).getTime())) / 60000
 
@@ -29,10 +40,10 @@ const EachRoom = (props) => {
             style={{backgroundColor: backgroundColor()}} 
             onMouseEnter={() => setAction({...action, hover: true })}
             onMouseLeave={() => setAction({...action, hover: false})}
-            onDoubleClick={() => props.handleDisplay("displayLobby", props.room)}
+            onDoubleClick={() => props.handleDisplay("displayRoom", props.room)}
         >
             <p className="each-room-name">{roomName}</p>
-            <p className="each-room-players">{players}/{maxPlayers}</p>
+            <p className="each-room-players">{players.length}/{maxPlayers}</p>
             <p className="each-room-age">{formatAge(ageInMinutes)}</p>
             <div className="each-room-join-container">
                     {closed ? (
@@ -40,7 +51,7 @@ const EachRoom = (props) => {
                             Closed
                         </p>
                     ) : (
-                    <p className="each-room-join" onClick={() => props.handleDisplay("displayLobby", props.room)}>
+                    <p className="each-room-join" onClick={() => handleJoinRoom()}>
                         Join                        
                     </p>
                     )}

@@ -20,7 +20,7 @@ const Lobby = () => {
     const [display, setDisplay] = useState({
         displayAllLobbies: true,
         createLobby: false,
-        displayLobby: false
+        displayRoom: false
     })
 
     const [sortBy, setSortBy] = useState({
@@ -32,7 +32,7 @@ const Lobby = () => {
 
     const [filterBy, setFilterBy] = useState({
         open: false,
-        lobbyName: "",
+        roomName: "",
         playerName: "",
         minPlayers: "", // number
         maxPlayers: "" // number
@@ -44,9 +44,6 @@ const Lobby = () => {
 
     useEffect(() => {
         const socket = socketIOClient();
-        socket.on("test", (res) => {
-            console.log("RESPONSE TEST", res)
-        })
         socket.on("connect", () => {
             setIo({...io, socket })
             console.log("User connected to socket.io")
@@ -101,17 +98,17 @@ const Lobby = () => {
             <>
                 <CreateLobbyOptions handleDisplay={handleDisplay} />
                 <div id="lobbies-containers">
-                    <CreateLobbyMain />
+                    <CreateLobbyMain socket={io.socket} handleDisplay={handleDisplay} displayName={displayName.value} />
                 </div>
             </> 
         )
-    } else if(display.displayLobby){
+    } else if(display.displayRoom){
         // Displays the specific joined lobby
         displayRender = (
             <>
                 <DisplayRoomOptions handleDisplay={handleDisplay} />
                 <div id="lobbies-containers">
-                    <DisplayRoom room={display.displayLobby} />
+                    <DisplayRoom room={display.displayRoom} />
                 </div>
             </>
         )
@@ -130,7 +127,7 @@ const Lobby = () => {
                 <div id="lobbies-containers">
                     <Topnavigator clickSortHandler={clickSortHandler} sortBy={sortBy} />
                     {io.socket ? (
-                        <Rooms sortBy={sortBy} filterBy={filterBy} handleDisplay={handleDisplay} socket={io.socket} />
+                        <Rooms sortBy={sortBy} filterBy={filterBy} handleDisplay={handleDisplay} socket={io.socket} displayName={displayName.value} />
                     ) : (
                         <div>
                             Loading rooms...
@@ -141,9 +138,9 @@ const Lobby = () => {
         )
     }
 
-    const handleTest = () => {
-        io.socket.emit("test")
-    }
+    // const handleTest = () => {
+    //     io.socket.emit("test")
+    // }
 
     return (
         <div id="lobbies-main-container">
@@ -159,7 +156,7 @@ const Lobby = () => {
                     </div>
                 )}
             </div>
-            <div onClick={() => handleTest()}>TEST</div>
+            {/* <div onClick={() => handleTest()}>TEST</div> */}
         </div>
     );
 };

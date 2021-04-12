@@ -7,23 +7,20 @@ router.get("/list-all-lobbies", (req, res) => {
 });
 
 router.post("/create-lobby", (req, res) => {
-  try {
-    const createdRoom = Lobby._createRoom(req.body);
-
-    if (!createdRoom) return res.status(400).json({ created: false });
-
-    const io = req.app.get("socketio");
-    const { roomName, maxPlayers, age, id } = createdRoom;
-    io.emit("updatedRooms", { roomName, maxPlayers, age, id, players: 1 });
-
-    res.status(201).json({ created: true, id });
-  } catch (error) {
-    console.error(error);
-
-    res
-      .status(500)
-      .send({ errorMessage: "Something went wrong during the request" });
-  }
+  // try {
+  //   const createdRoom = Lobby._createRoom(req.body);
+  //   if (!createdRoom) return res.status(400).json({ created: false });
+  //   const io = req.app.get("socketio");
+  //   const { roomName, maxPlayers, age, id } = createdRoom;
+  //   io.emit("updatedRooms", { roomName, maxPlayers, age, id, players: 1 });
+  //   console.log("Room created", Lobby._getAllRooms().length);
+  //   res.status(201).json({ created: true, id });
+  // } catch (error) {
+  //   console.error(error);
+  //   res
+  //     .status(500)
+  //     .send({ errorMessage: "Something went wrong during the request" });
+  // }
 });
 
 module.exports = router;

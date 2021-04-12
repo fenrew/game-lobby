@@ -1,40 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./create-lobby-main.css"
 
-const CreateLobbyMain = () => {
+const CreateLobbyMain = (props) => {
     const [newLobby, setNewLobby] = useState({
         roomName: "",
         maxPlayers: 8,
-        gameUrl: ""
+        gameUrl: "",
+        creating: false
+    })
+    
+    const [redirect, setRedirect] = useState({
+        toRoom: false
     })
 
+    useEffect(() => {
+        if(redirect.toRoom) {
+            props.handleDisplay("displayRoom", newLobby)
+        }
+    })
+
+    useEffect(() => {
+        props.socket.on("createdRoomSuccess", () => {
+            console.log("SUCCESS")
+            setRedirect({toRoom: true})
+        })
+
+        return () => {
+            props.socket.off('createdRoomSuccess');
+        }
+    }, [])
+
     const handleChange = (e) => {
-        console.log(e.target.name, e.target.value)
         setNewLobby({
             ...newLobby, [e.target.name]: e.target.value
         })
     }
 
     const handleCreateLobby = async () => {
-        fetch("/api/create-lobby", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-              },
-            body: JSON.stringify(newLobby)
-          }).then(response => response.json())
-          .then(data => {
-              if(!data.created){
-                return console.error("400: The room was not created due to a bad request")
-              }
-              else {
-
-              }
-          })
-          .catch(err => {
-              console.error("Something went wrong while creating a new room", err)
-          })
+        props.socket.emit("createRoom", {newRoom: newLobby, creator: props.displayName || "Anonymous"})
     }
+
+    console.log(redirect)
 
     return (
         <div id="create-lobby-main-container">

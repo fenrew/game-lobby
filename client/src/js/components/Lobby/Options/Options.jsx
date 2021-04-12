@@ -54,7 +54,7 @@ const Options = (props) => {
                     </div>
                     <div className="options-input-containers">
                         <label htmlFor="findLobby">Find Lobby</label>
-                        <input type="text" name="findLobby" value={props.filterBy.lobbyName} onChange={(e) => props.handleFiltering("lobbyName", e.target.value)}/>
+                        <input type="text" name="findLobby" value={props.filterBy.roomName} onChange={(e) => props.handleFiltering("roomName", e.target.value)}/>
                     </div>
                     <div className="options-input-containers">
                         <label htmlFor="findPlayer">Find Player</label>
