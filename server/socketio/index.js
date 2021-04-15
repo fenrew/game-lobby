@@ -1,12 +1,13 @@
 const socketio = require("socket.io");
 const { createRoom } = require("./lobby/create-room/create-room");
 const { joinRoom } = require("./lobby/join-room/join-room");
+const { leaveRoom } = require("./lobby/leave-room/leave-room");
 
 module.exports = (http) => {
   const io = socketio(http);
 
   io.on("connection", (socket) => {
-    console.log("a user connected");
+    console.info("a user connected");
 
     socket.on("writeChatMessage", (message) => {
       if (
@@ -25,12 +26,17 @@ module.exports = (http) => {
       createRoom(io, socket, newRoom, creator);
     });
 
-    socket.on("joinRoom", (roomId, userDisplayName) => {
+    socket.on("joinRoom", ({ roomId, userDisplayName }) => {
       joinRoom(io, socket, roomId, userDisplayName);
     });
 
+    socket.on("leaveRoom", () => {
+      leaveRoom(io, socket);
+    });
+
     socket.on("disconnect", () => {
-      console.log("user disconnected");
+      leaveRoom(io, socket);
+      console.info("user disconnected");
     });
   });
 

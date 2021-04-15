@@ -18,12 +18,14 @@ class Room {
 
     // Checkes the users ID to verify correct input
     this.checkUserId = (userId) => {
-      if (!typeof userId === "string") return false;
+      if (userId && !(typeof userId === "string")) return false;
 
       return true;
     };
+
     this.checkUserDisplayName = (userDisplayName) => {
-      if (!typeof userDisplayName === "string") return false;
+      if (!userDisplayName || !(typeof userDisplayName === "string"))
+        return false;
       if (userDisplayName.length > 14) userDisplayName.slice(0, 14);
       if (userDisplayName.length < 2) userDisplayName + userDisplayName;
 
@@ -36,47 +38,60 @@ class Room {
       if (!this.checkUserDisplayName(userObj.userDisplayName))
         userObj.userDisplayName = "Anonymous";
 
-      this.users.push(userObj);
+      this.users.push({
+        userDisplayName: userObj.userDisplayName,
+        userId: userObj.userId,
+      });
       return true;
     };
-
-    // Removes a user from the room
-    this._removeUser = (userId) => {
-      if (!this.checkUserId(userId)) return false;
-
-      this.splice(this.users.indexOf(userId), 1);
-    };
-
-    // Promotes a user to leader in the room
-    this._promoteUser = (userId) => {
-      if (!this.checkUserId(userId)) return false;
-      this.removeUser(userId);
-      this.users.unshift(userId);
-    };
-
-    // Attaches a game instance to the room
-    this._attachInstance = (gameInstance) => {
-      this.gameInstance = gameInstance;
-    };
-
-    // Detaches a game instance from the room
-    this._detachInstance = () => {
-      this.gameInstance = null;
-    };
-
-    this._changeName = (newName) => {
-      this.roomName = newName.toString();
-      if (this.roomName.length < 1) return false;
-      return this.roomName;
-    };
-
-    this._getUsersDisplayName = () => {
-      const usersDisplayName = [];
-      this.users.forEach((user) =>
-        usersDisplayName.push({ displayName: user.displayName })
-      );
-    };
   }
+
+  // Removes a user from the room
+  _removeUser = (userId) => {
+    if (!this.checkUserId(userId)) return false;
+
+    this.users.splice(this.users.indexOf(userId), 1);
+    return this.users.length;
+  };
+
+  // Promotes a user to leader in the room
+  _promoteUser = (userId) => {
+    if (!this.checkUserId(userId)) return false;
+    this.removeUser(userId);
+    this.users.unshift(userId);
+  };
+
+  // Attaches a game instance to the room
+  _attachInstance = (gameInstance) => {
+    this.gameInstance = gameInstance;
+  };
+
+  // Detaches a game instance from the room
+  _detachInstance = () => {
+    this.gameInstance = null;
+  };
+
+  _changeName = (newName) => {
+    this.roomName = newName.toString();
+    if (this.roomName.length < 1) return false;
+    return this.roomName;
+  };
+
+  _getUsersDisplayName = () => {
+    const usersDisplayName = [];
+    this.users.forEach((user) => usersDisplayName.push(user.userDisplayName));
+    return usersDisplayName;
+  };
+
+  _displayRoom = () => {
+    return {
+      roomName: this.roomName,
+      maxPlayers: this.maxPlayers,
+      age: this.age,
+      id: this.id,
+      players: this._getUsersDisplayName(),
+    };
+  };
 }
 
 module.exports = Room;

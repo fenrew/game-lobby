@@ -5,13 +5,15 @@ import "./each-room.css"
 const EachRoom = (props) => {
     const {id, roomName, players, maxPlayers, age, closed} = props.room
 
+    console.log("ROOM", players)
+
     const [action, setAction] = useState({
         hover: false
     })
 
     useEffect(() => {
-        props.socket.on("joinedRoomSuccess", () => {
-            props.handleDisplay("displayRoom", props.room)
+        props.socket.on("joinedRoomSuccess", (newRoom) => {
+            props.handleDisplay("displayRoom", newRoom)
         })
     }, [])
 
@@ -40,7 +42,7 @@ const EachRoom = (props) => {
             style={{backgroundColor: backgroundColor()}} 
             onMouseEnter={() => setAction({...action, hover: true })}
             onMouseLeave={() => setAction({...action, hover: false})}
-            onDoubleClick={() => props.handleDisplay("displayRoom", props.room)}
+            onDoubleClick={() => handleJoinRoom()}
         >
             <p className="each-room-name">{roomName}</p>
             <p className="each-room-players">{players.length}/{maxPlayers}</p>

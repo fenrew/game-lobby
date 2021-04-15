@@ -3,16 +3,6 @@ import EachRoom from "./EachRoom/EachRoom"
 
 import "./rooms.css"
 
-// Example Room object
-// [
-//     {
-//         id: "str",
-//         name: "string",
-//         players: 3,
-//         maxPlayers: 8,
-//         closed: false
-//     }
-// ]
 const Rooms = (props) => {
     const [rooms, setRooms] = useState({
         list: []
@@ -26,6 +16,7 @@ const Rooms = (props) => {
               }
           }).then(response => response.json())
           .then(data => {
+              console.log("DAAAATA", data.rooms)
               setRooms({...rooms, list: data.rooms})
           })
           .catch(err => {
@@ -38,6 +29,8 @@ const Rooms = (props) => {
 
             if(!existingRoom){
                 rooms.list.push({age, roomName, maxPlayers, id, players})
+            } else if (players.length === 0 && existingRoom){
+                rooms.list.splice(rooms.indexOf(existingRoom), 1)
             } else {
                 existingRoom.roomName = roomName
                 existingRoom.maxPlayers = maxPlayers

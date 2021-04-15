@@ -9,7 +9,10 @@ const joinRoom = (io, socket, roomId, userDisplayName) => {
     return;
   }
 
-  const addedToRoom = roomToJoin._addUser({ userId, userDisplayName });
+  const addedToRoom = roomToJoin._addUser({
+    userId: socket.id,
+    userDisplayName,
+  });
 
   if (!addedToRoom) {
     console.info(
@@ -18,9 +21,12 @@ const joinRoom = (io, socket, roomId, userDisplayName) => {
     return;
   }
 
-  updatedRoom(roomToJoin);
+  console.log("USESESSSESR", roomToJoin._getUsersDisplayName());
+  socket.join(roomToJoin.id);
 
-  socket.emit("joinedRoomSuccess");
+  updatedRoom(io, roomToJoin);
+
+  socket.emit("joinedRoomSuccess", roomToJoin._displayRoom());
 };
 
 module.exports = { joinRoom };

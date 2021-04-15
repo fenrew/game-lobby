@@ -11,12 +11,13 @@ const createRoom = (io, socket, room, creatorDisplayName) => {
     if (!createdRoom) {
       // TODO: Handle what happens if the room is not created
       console.log("ROOM WAS NOT CREATED");
+      return;
     }
 
-    updatedRoom(createdRoom);
+    updatedRoom(io, createdRoom);
 
-    socket.join(id);
-    socket.emit("createdRoomSuccess");
+    socket.join(createdRoom.id);
+    socket.emit("createdRoomSuccess", createdRoom._displayRoom());
 
     console.log("Room created, current roomcount", Lobby._getAllRooms().length);
   } catch (error) {

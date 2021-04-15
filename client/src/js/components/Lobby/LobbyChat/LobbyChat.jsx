@@ -20,9 +20,7 @@ const LobbyChat = (props) => {
         })
 
         // window.addEventListener("scroll", () => {
-        //     console.log(chatMessages.current)
         //     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        //        console.log("you're at the bottom of the page");
         //        // Show loading spinner and make fetch request to api
         //     }
         //  });

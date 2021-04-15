@@ -3,7 +3,8 @@ const router = express.Router();
 const Lobby = require("../lobby");
 
 router.get("/list-all-lobbies", (req, res) => {
-  res.status(200).json({ rooms: Lobby._getAllRooms() });
+  console.log(Lobby._getAllRooms());
+  res.status(200).json({ rooms: Lobby._displayAllRooms() });
 });
 
 router.post("/create-lobby", (req, res) => {
@@ -13,7 +14,6 @@ router.post("/create-lobby", (req, res) => {
   //   const io = req.app.get("socketio");
   //   const { roomName, maxPlayers, age, id } = createdRoom;
   //   io.emit("updatedRooms", { roomName, maxPlayers, age, id, players: 1 });
-  //   console.log("Room created", Lobby._getAllRooms().length);
   //   res.status(201).json({ created: true, id });
   // } catch (error) {
   //   console.error(error);

@@ -54,9 +54,9 @@ class Lobby {
   _removeRoom(roomId) {
     if (!this.checkRoomId(roomId)) return false;
 
-    this.splice(this.rooms.indexOf(roomId), 1);
+    this.rooms.splice(this.rooms.indexOf(roomId), 1);
 
-    return roomid;
+    return roomId;
   }
 
   _findRoomById(roomId) {
@@ -69,7 +69,7 @@ class Lobby {
 
   _findUsersRoom(userId) {
     return this.rooms.find((room) =>
-      room.users.find((user) => user === userId)
+      room.users.find((user) => user.userId === userId)
     );
   }
 
@@ -86,6 +86,14 @@ class Lobby {
 
   _getAllRooms() {
     return this.rooms;
+  }
+
+  _displayAllRooms() {
+    const allRooms = this.rooms.map((room) => {
+      return room._displayRoom();
+    });
+
+    return allRooms;
   }
 }
 

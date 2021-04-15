@@ -46,7 +46,7 @@ const Lobby = () => {
         const socket = socketIOClient();
         socket.on("connect", () => {
             setIo({...io, socket })
-            console.log("User connected to socket.io")
+            console.info("User connected to socket.io")
         });
     }, [])
 
@@ -106,9 +106,9 @@ const Lobby = () => {
         // Displays the specific joined lobby
         displayRender = (
             <>
-                <DisplayRoomOptions handleDisplay={handleDisplay} />
+                <DisplayRoomOptions socket={io.socket} handleDisplay={handleDisplay} />
                 <div id="lobbies-containers">
-                    <DisplayRoom room={display.displayRoom} />
+                    <DisplayRoom room={display.displayRoom} socket={io.socket} handleDisplay={handleDisplay} />
                 </div>
             </>
         )

@@ -15,14 +15,14 @@ const CreateLobbyMain = (props) => {
 
     useEffect(() => {
         if(redirect.toRoom) {
-            props.handleDisplay("displayRoom", newLobby)
+            console.log("REDIRECT TO ROOM", redirect.toRoom)
+            props.handleDisplay("displayRoom", redirect.toRoom)
         }
     })
 
     useEffect(() => {
-        props.socket.on("createdRoomSuccess", () => {
-            console.log("SUCCESS")
-            setRedirect({toRoom: true})
+        props.socket.on("createdRoomSuccess", (newRoom) => {
+            setRedirect({toRoom: newRoom})
         })
 
         return () => {
@@ -39,8 +39,6 @@ const CreateLobbyMain = (props) => {
     const handleCreateLobby = async () => {
         props.socket.emit("createRoom", {newRoom: newLobby, creator: props.displayName || "Anonymous"})
     }
-
-    console.log(redirect)
 
     return (
         <div id="create-lobby-main-container">
